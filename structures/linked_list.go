@@ -27,6 +27,29 @@ func (l *LinkedList) Prepend(n *Node) {
 	l.Length++
 }
 
+// Delete delete a Node from the LinkedList
+func (l *LinkedList) Delete(item interface{}) {
+	if l.Length == 0 {
+		return
+	}
+
+	if l.Head.Data == item {
+		l.Head = l.Head.Next
+		l.Length--
+	}
+
+	previousToDelete := l.Head
+
+	for previousToDelete.Next.Data != item {
+		if previousToDelete.Next.Next == nil {
+			return
+		}
+		previousToDelete = previousToDelete.Next
+	}
+	previousToDelete.Next = previousToDelete.Next.Next
+	l.Length--
+}
+
 // Iterate iterate all Node of the LinkedList
 func (l *LinkedList) Iterate(f func(n *Node)) {
 	pointer := l.Head

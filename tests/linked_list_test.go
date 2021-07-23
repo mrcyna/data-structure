@@ -73,3 +73,44 @@ func TestPrependThreeItemToTheLinkedList(t *testing.T) {
 		t.Error("total sum of the nodes should be 600")
 	}
 }
+
+func TestDeleteFromTheLinkedList(t *testing.T) {
+	ll := structures.NewLinkedList()
+
+	ll.Prepend(&structures.Node{
+		Data: 100,
+		Next: nil,
+	})
+
+	ll.Prepend(&structures.Node{
+		Data: 200,
+		Next: nil,
+	})
+
+	ll.Prepend(&structures.Node{
+		Data: 300,
+		Next: nil,
+	})
+
+	ll.Delete(200)
+
+	if ll.Length != 2 {
+		t.Error("linked list size should be two")
+	}
+
+	if ll.Head.Data != 300 {
+		t.Error("linked list head data should be 300")
+	}
+
+	if ll.Head.Next.Data != 100 {
+		t.Error("linked list head data should be 100")
+	}
+
+	sum := 0
+	ll.Iterate(func(n *structures.Node) {
+		sum += n.Data.(int)
+	})
+	if sum != 400 {
+		t.Error("total sum of the nodes should be 400")
+	}
+}
