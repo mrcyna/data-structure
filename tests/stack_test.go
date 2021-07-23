@@ -7,55 +7,63 @@ import (
 )
 
 func TestStack(t *testing.T) {
-	q := structures.NewStack()
+	s := structures.NewStack()
 
-	if len(q.Items) != 0 {
+	if len(s.Items) != 0 {
 		t.Error("stack should be zero size at the beginning")
 	}
 }
 
 func TestPushOneItemToStack(t *testing.T) {
-	q := structures.NewStack()
-	q.Push(100)
+	s := structures.NewStack()
+	s.Push(100)
 
-	if len(q.Items) != 1 {
+	if len(s.Items) != 1 {
 		t.Error("stack should have length of 1")
 	}
 
-	if q.Items[0] != 100 {
+	if s.LastIndex() != 0 {
+		t.Error("last index of stack should be 0")
+	}
+
+	if s.Items[0] != 100 {
 		t.Error("stack first item should be 100")
 	}
 }
 
 func TestPushManyItemToStack(t *testing.T) {
-	q := structures.NewStack()
-	q.Push(100)
-	q.Push(200)
-	q.Push(300)
+	s := structures.NewStack()
+	s.Push(100)
+	s.Push(200)
+	s.Push(300)
 
-	if len(q.Items) != 3 {
+	if len(s.Items) != 3 {
 		t.Error("stack should have length of 3")
 	}
 
-	if q.Items[0] != 100 {
+	if s.Items[0] != 100 {
 		t.Error("stack first item should be 100")
 	}
 
-	if q.Items[1] != 200 {
+	if s.Items[1] != 200 {
 		t.Error("stack first item should be 200")
 	}
 
-	if q.Items[2] != 300 {
+	if s.Items[2] != 300 {
 		t.Error("stack first item should be 300")
+	}
+
+	if s.LastIndex() != 2 {
+		t.Error("last index of stack should be 2")
 	}
 }
 
 func TestPopOneItemFromStack(t *testing.T) {
-	q := structures.NewStack()
-	q.Push(100)
-	res, err := q.Pop()
+	s := structures.NewStack()
+	s.Push(100)
+	res, err := s.Pop()
 
-	if len(q.Items) != 0 {
+	if len(s.Items) != 0 {
 		t.Error("stack should have length of 0")
 	}
 
@@ -66,19 +74,23 @@ func TestPopOneItemFromStack(t *testing.T) {
 	if err != nil {
 		t.Error("error should be nil")
 	}
+
+	if s.LastIndex() != -1 {
+		t.Error("last index of stack should be -1")
+	}
 }
 
 func TestPopManyItemFromStack(t *testing.T) {
-	q := structures.NewStack()
-	q.Push(100)
-	q.Push(200)
-	q.Push(300)
+	s := structures.NewStack()
+	s.Push(100)
+	s.Push(200)
+	s.Push(300)
 
-	res1, err1 := q.Pop()
-	res2, err2 := q.Pop()
-	res3, err3 := q.Pop()
+	res1, err1 := s.Pop()
+	res2, err2 := s.Pop()
+	res3, err3 := s.Pop()
 
-	if len(q.Items) != 0 {
+	if len(s.Items) != 0 {
 		t.Error("stack should have length of 0")
 	}
 
@@ -105,11 +117,15 @@ func TestPopManyItemFromStack(t *testing.T) {
 	if err3 != nil {
 		t.Error("error should be nil")
 	}
+
+	if s.LastIndex() != -1 {
+		t.Error("last index of stack should be -1")
+	}
 }
 
 func TestPopEmptyStackShouldThrowError(t *testing.T) {
-	q := structures.NewStack()
-	res, err := q.Pop()
+	s := structures.NewStack()
+	res, err := s.Pop()
 
 	if res != nil {
 		t.Error("result should be nil")
@@ -117,5 +133,9 @@ func TestPopEmptyStackShouldThrowError(t *testing.T) {
 
 	if err == nil {
 		t.Error("error must not be nil")
+	}
+
+	if s.LastIndex() != -1 {
+		t.Error("last index of stack should be -1")
 	}
 }
